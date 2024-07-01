@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet ,Alert,Text,FlatList} from 'react-native';
+import { View, StyleSheet ,Alert,Text,FlatList,useWindowDimensions} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import Title from '../components/ui/Title';
 import NumberContainer from '../components/game/NumberContainer';
@@ -18,6 +18,8 @@ function generateRandomBetween(min,max,exclude){
   }
 }
 
+
+
 let minBoundary=1;
 let maxBoundary=100;
 
@@ -25,6 +27,9 @@ function GameScreen({userNumber,onGameOver}) {
   const initialGuess = generateRandomBetween(1,100,userNumber);
   const [currentGuess,setCurrentGuess]=useState(initialGuess);
   const[guessRounds,setGuessRounds] = useState([initialGuess]);
+
+  const {width,height}= useWindowDimensions();
+
 
   useEffect(() => {
     if(currentGuess === userNumber){
@@ -70,6 +75,9 @@ function GameScreen({userNumber,onGameOver}) {
   }
 
   const gouessRoundListLength = guessRounds.length;
+
+  let content = height < 380 ?  30 : 100;
+
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
